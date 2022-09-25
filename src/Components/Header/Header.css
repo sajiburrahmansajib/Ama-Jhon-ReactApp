@@ -1,0 +1,19 @@
+.headerContainer {
+    height: 80px;
+    background-color: #1C2B35;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 140px;
+}
+
+.headerContainer a {
+    color: white;
+    font-size: 17px;
+    margin-right: 40px;
+    text-decoration: none;
+}
+
+.headerContainer a:hover {
+    color: coral;
+}

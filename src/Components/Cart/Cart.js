@@ -4,7 +4,6 @@ import './Cart.css'
 
 
 const Cart = ({ cart }) => {
-    console.log(cart)
     // const initialValue = 0;
     // const totalPrice = cart.reduce(
     //     (previousValue, currentValue) => previousValue + currentValue.price,

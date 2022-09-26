@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { addToDb, getStoredData } from '../../utilities/fakedb';
+import { addToDb, deleteShoppingCart, getStoredData } from '../../utilities/fakedb';
 import Cart from '../Cart/Cart';
 import Product from '../Product/Product';
 import './Shop.css'
@@ -27,11 +27,38 @@ const Shop = () => {
             }
             setCart(saveCart)
         }
-    }, [products])
-    const handleAddToCart = (product) => {
-        const newCart = [...cart, product];
+    }, [products, cart])
+    const handleAddToCart = (selectedProduct) => {
+
+        const exists = cart.find(product => product.id === selectedProduct.id)
+        let newCart = [];
+        if (!exists) {
+            selectedProduct.quantity = 1;
+            selectedProduct.stock = selectedProduct.stock - 1;
+            if (selectedProduct.stock === 0) {
+                selectedProduct.stock = 'Out Of Stock';
+                newCart = [...cart, selectedProduct];
+
+            }
+            else {
+                newCart = [...cart, selectedProduct];
+            }
+
+        }
+        else {
+            const rest = cart.filter(product => product.id !== selectedProduct.id)
+            exists.quantity = exists.quantity + 1;
+            exists.stock = exists.stock - 1;
+            if (exists.stock === 0) {
+                exists.stock = 'Out Of Stock';
+                newCart = [...rest, exists];
+            }
+            else {
+                newCart = [...rest, exists]
+            }
+        }
         setCart(newCart)
-        addToDb(product.id)
+        addToDb(selectedProduct.id)
     }
     return (
         <div className='shop-container'>
